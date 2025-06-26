@@ -41,6 +41,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly);
 builder.Services.AddScoped<ISessionService, CookieAuthenticationService>();
+builder.Services.AddScoped<ICasinoChallengeGenerator, OpenAiCasinoChallengeGenerator>();
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 builder.Services.AddAuthentication("DevLifeCookie")
     .AddCookie("DevLifeCookie", options =>
