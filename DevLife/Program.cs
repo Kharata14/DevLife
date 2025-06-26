@@ -3,6 +3,7 @@ using DevLife.Api.Middleware;
 using DevLife.Application.Common.Behaviors;
 using DevLife.Application.Features.Achievements.Checkers;
 using DevLife.Application.Features.Authentication;
+using DevLife.Application.Features.CodeRoast.Dtos;
 using DevLife.Application.Interfaces;
 using DevLife.Infrastructure.Persistence;
 using DevLife.Infrastructure.Repositories;
@@ -23,6 +24,9 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("MongoConnection");
     return new MongoClient(connectionString);
 });
+builder.Services.AddScoped<ICodingChallengeProvider, OpenAiChallengeGenerator>();
+builder.Services.AddScoped<ICodeExecutionService, Judge0CodeExecutionService>();
+builder.Services.AddScoped<IAiCodeRoastService, OpenAiCodeRoastService>();
 builder.Services.AddSingleton<IDailyLuckService, DailyLuckService>();
 builder.Services.AddScoped<IExcuseTemplateRepository, MongoExcuseTemplateRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -40,10 +44,12 @@ builder.Services.AddScoped<IUserAchievementRepository, UserAchievementRepository
 builder.Services.AddScoped<IAchievementChecker, ScoreAchievementChecker>();
 builder.Services.AddScoped<IGameScoreRepository, GameScoreRepository>();
 builder.Services.AddScoped<IHoroscopeService, OpenAiHoroscopeService>();
+builder.Services.AddScoped<ICodeRoastSubmissionRepository, CodeRoastSubmissionRepository>();
 builder.Services.AddSignalR();
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(DevLife.Infrastructure.AssemblyReference).Assembly);
 });
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly);

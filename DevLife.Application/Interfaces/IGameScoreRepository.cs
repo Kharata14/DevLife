@@ -11,4 +11,5 @@ public interface IGameScoreRepository
 {
     Task AddBugChaseScoreAsync(BugChaseGameScore score);
     Task<List<LeaderboardEntryDto>> GetLeaderboardAsync(int topN = 10);
+    Task<int> GetHighScoreForUserAsync(Guid userId);
 }

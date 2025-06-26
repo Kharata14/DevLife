@@ -47,4 +47,16 @@ public class GameScoreRepository : IGameScoreRepository
 
         return leaderboard;
     }
+    public async Task<int> GetHighScoreForUserAsync(Guid userId)
+    {
+        var userScores = _context.BugChaseGameScores
+            .Where(s => s.UserId == userId);
+
+        if (!await userScores.AnyAsync())
+        {
+            return 0;
+        }
+
+        return await userScores.MaxAsync(s => s.Score);
+    }
 }

@@ -19,6 +19,14 @@ public class BugChaseController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("my-high-score")]
+    public async Task<IActionResult> GetMyHighScore()
+    {
+        var query = new GetMyHighScoreQuery();
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpGet("leaderboard")]
     public async Task<IActionResult> GetLeaderboard()
     {
