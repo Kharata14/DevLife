@@ -1,44 +1,14 @@
-﻿using DevLife.Application.Interfaces;
-using DevLife.Domain.Entities;
-using DevLife.Domain.Enums;
+﻿using DevLife.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevLife.Application.Features.Authentication;
-
-public class UserService : IUserService
+namespace DevLife.Application.Common;
+ public static class ZodiacCalculator
 {
-    private readonly IApplicationDbContext _context;
-
-    public UserService(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<User> RegisterUserAsync(RegistrationRequest request)
-    {
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Username = request.Username,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            DateOfBirth = request.DateOfBirth,
-            TechStack = request.TechStack,
-            ExperienceLevel = request.ExperienceLevel,
-            ZodiacSign = CalculateZodiacSign(request.DateOfBirth)
-        };
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-
-        return user;
-    }
-
-    private ZodiacSign CalculateZodiacSign(DateTime dateOfBirth)
+    public static ZodiacSign Calculate(DateTime dateOfBirth)
     {
         int month = dateOfBirth.Month;
         int day = dateOfBirth.Day;
