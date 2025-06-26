@@ -13,4 +13,6 @@ public interface IUserRepository
     Task<User?> GetUserByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
     Task<bool> UpdateUserPointsAsync(Guid userId, int pointsToChange);
+    Task UpdateUserAsync(User user);
+    Task<List<User>> GetTopUsersByPointsAsync(int count = 10);
 }

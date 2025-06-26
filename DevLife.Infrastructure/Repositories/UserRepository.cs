@@ -47,7 +47,19 @@ public class UserRepository : IUserRepository
         }
         user.Points += pointsToChange;
         await _context.SaveChangesAsync();
-
         return true;
+    }
+    public async Task UpdateUserAsync(User user)
+    {
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+    }
+    public async Task<List<User>> GetTopUsersByPointsAsync(int count = 10)
+    {
+        return await _context.Users
+            .OrderByDescending(u => u.Points)
+            .ThenByDescending(u => u.LongestStreak)
+            .Take(count)
+            .ToListAsync();
     }
 }

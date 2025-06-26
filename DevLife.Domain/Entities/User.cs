@@ -18,5 +18,7 @@ public class User
     public string ExperienceLevel { get; set; }
     public ZodiacSign ZodiacSign { get; set; }
     public int Points { get; set; }
+    public int CurrentStreak { get; set; } = 0;
+    public int LongestStreak { get; set; } = 0;
 }
 

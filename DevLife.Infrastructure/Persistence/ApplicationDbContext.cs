@@ -16,4 +16,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<User> Users { get; set; }
     public DbSet<ExcuseLog> ExcuseLogs { get; set; }
     public DbSet<CasinoGame> CasinoGames { get; set; }
+    public DbSet<BugChaseGameScore> BugChaseGameScores { get; set; }
+    public DbSet<UserAchievement> UserAchievements { get; set; }
 }

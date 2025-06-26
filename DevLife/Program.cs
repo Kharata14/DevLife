@@ -1,5 +1,7 @@
-﻿using DevLife.Api.Middleware;
+﻿using DevLife.Api.Hubs;
+using DevLife.Api.Middleware;
 using DevLife.Application.Common.Behaviors;
+using DevLife.Application.Features.Achievements.Checkers;
 using DevLife.Application.Features.Authentication;
 using DevLife.Application.Interfaces;
 using DevLife.Infrastructure.Persistence;
@@ -21,6 +23,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("MongoConnection");
     return new MongoClient(connectionString);
 });
+builder.Services.AddSingleton<IDailyLuckService, DailyLuckService>();
 builder.Services.AddScoped<IExcuseTemplateRepository, MongoExcuseTemplateRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IExcuseLogRepository, ExcuseLogRepository>();
@@ -33,11 +36,15 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = redisConnectionString;
     options.InstanceName = "DevLife_";
 });
-
+builder.Services.AddScoped<IUserAchievementRepository, UserAchievementRepository>();
+builder.Services.AddScoped<IAchievementChecker, ScoreAchievementChecker>();
+builder.Services.AddScoped<IGameScoreRepository, GameScoreRepository>();
 builder.Services.AddScoped<IHoroscopeService, OpenAiHoroscopeService>();
-
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly));
+builder.Services.AddSignalR();
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(typeof(DevLife.Application.AssemblyReference).Assembly);
 builder.Services.AddScoped<ISessionService, CookieAuthenticationService>();
@@ -87,5 +94,7 @@ app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapControllers();
+app.MapHub<GameHub>("/gameHub");
 
 app.Run();
