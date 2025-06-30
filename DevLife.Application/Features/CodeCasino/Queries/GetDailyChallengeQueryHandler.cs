@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace DevLife.Application.Features.CodeCasino.Queries;
 public class GetDailyChallengeQueryHandler : IRequestHandler<GetDailyChallengeQuery, PublicCasinoChallengeDto>
 {
-    // ეს Handler-ი იყენებს იგივე დამოკიდებულებებს, რასაც ჩვეულებრივი გამოწვევის Handler-ი
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUserRepository _userRepository;
     private readonly ICasinoChallengeGenerator _challengeGenerator;
@@ -34,13 +33,11 @@ public class GetDailyChallengeQueryHandler : IRequestHandler<GetDailyChallengeQu
         var dateKey = DateTime.UtcNow.ToString("yyyy-MM-dd");
         var userPlayedCacheKey = $"daily_played:{userId}:{dateKey}";
 
-        // ნაბიჯი 1: შევამოწმოთ, ხომ არ უთამაშია მომხმარებელს დღეს
         if (await _cache.GetStringAsync(userPlayedCacheKey, cancellationToken) != null)
         {
             throw new InvalidOperationException("You have already completed the daily challenge today. Come back tomorrow!");
         }
 
-        // ნაბიჯი 2: დავაგენერიროთ სრულიად ახალი, ჩვეულებრივი გამოწვევა
         var user = await _userRepository.GetUserByIdAsync(userId, cancellationToken);
         var fullChallenge = await _challengeGenerator.GenerateChallengeAsync(user.TechStack, user.ExperienceLevel);
 

@@ -42,7 +42,7 @@ namespace DevLife.Infrastructure.Services;
 
         try
         {
-            var chatClient = _openAiClient.GetChatClient("gpt-3.5-turbo");
+            var chatClient = _openAiClient.GetChatClient("gpt-4o-mini");
             ChatCompletion completion = await chatClient.CompleteChatAsync(new List<ChatMessage> { new SystemChatMessage(systemPrompt), new UserChatMessage(userPrompt) });
 
             var jsonResponse = completion.Content[0].Text;
