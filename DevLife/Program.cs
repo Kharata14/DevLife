@@ -44,6 +44,12 @@ builder.Services.AddScoped<IUserAchievementRepository, UserAchievementRepository
 builder.Services.AddScoped<IAchievementChecker, ScoreAchievementChecker>();
 builder.Services.AddScoped<IGameScoreRepository, GameScoreRepository>();
 builder.Services.AddScoped<IHoroscopeService, OpenAiHoroscopeService>();
+builder.Services.AddScoped<IGitHubService, GitHubService>();
+builder.Services.AddScoped<IGitHubAnalysisService, GitHubAnalysisService>();
+builder.Services.AddScoped<IGitHubAnalysisJobRepository, GitHubAnalysisJobRepository>();
+builder.Services.AddScoped<ICardGenerationService, ImageCardGenerationService>();
+builder.Services.AddScoped<IUserSwipeRepository, UserSwipeRepository>();
+builder.Services.AddScoped<IDatingProfileRepository, MongoDatingProfileRepository>();
 builder.Services.AddScoped<ICodeRoastSubmissionRepository, CodeRoastSubmissionRepository>();
 builder.Services.AddSignalR();
 builder.Services.AddMediatR(cfg => {

@@ -3,6 +3,7 @@ using System;
 using DevLife.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DevLife.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250630091141_AddGitHubAnalysisJobs")]
+    partial class AddGitHubAnalysisJobs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,35 +173,11 @@ namespace DevLife.Infrastructure.Migrations
                     b.ToTable("GitHubAnalysisJobs");
                 });
 
-            modelBuilder.Entity("DevLife.Domain.Entities.Match", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("MatchedUserProfileId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Matches");
-                });
-
             modelBuilder.Entity("DevLife.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Bio")
-                        .HasColumnType("text");
 
                     b.Property<int>("CurrentStreak")
                         .HasColumnType("integer");
@@ -214,14 +193,8 @@ namespace DevLife.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("Gender")
-                        .HasColumnType("integer");
-
                     b.Property<string>("GitHubAccessToken")
                         .HasColumnType("text");
-
-                    b.Property<int?>("InterestedIn")
-                        .HasColumnType("integer");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -268,30 +241,6 @@ namespace DevLife.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserAchievements");
-                });
-
-            modelBuilder.Entity("DevLife.Domain.Entities.UserSwipe", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("DidLike")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("SwipeDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SwipedProfileId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserSwipes");
                 });
 #pragma warning restore 612, 618
         }

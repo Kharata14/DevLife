@@ -19,4 +19,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<BugChaseGameScore> BugChaseGameScores { get; set; }
     public DbSet<UserAchievement> UserAchievements { get; set; }
     public DbSet<CodeRoastSubmission> CodeRoastSubmissions { get; set; }
+    public DbSet<GitHubAnalysisJob> GitHubAnalysisJobs { get; set; }
+    public DbSet<UserSwipe> UserSwipes { get; set; }
+    public DbSet<Match> Matches { get; set; }
 }

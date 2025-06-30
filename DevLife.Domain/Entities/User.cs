@@ -20,5 +20,9 @@ public class User
     public int Points { get; set; }
     public int CurrentStreak { get; set; } = 0;
     public int LongestStreak { get; set; } = 0;
+    public string? GitHubAccessToken { get; set; }
+    public string? Bio { get; set; }
+    public Gender? Gender { get; set; }
+    public Interest? InterestedIn { get; set; }
 }
 
