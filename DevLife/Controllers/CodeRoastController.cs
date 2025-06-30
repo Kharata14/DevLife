@@ -18,7 +18,7 @@ public class CodeRoastController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("challenge")]
+    [HttpGet("code-roast-challenge")]
     public async Task<IActionResult> GetChallenge([FromQuery] string difficulty = "Junior")
     {
         var query = new GetRoastChallengeQuery { Difficulty = difficulty };
@@ -26,14 +26,14 @@ public class CodeRoastController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("submission")]
+    [HttpPost("code-roast-submission")]
     public async Task<IActionResult> SubmitSolution([FromBody] SubmitSolutionCommand command)
     {
         var submissionId = await _mediator.Send(command);
         return AcceptedAtAction(nameof(GetSubmissionResult), new { id = submissionId }, new { submissionId });
     }
 
-    [HttpGet("submission/{id:guid}")]
+    [HttpGet("code-roast-submission/{id:guid}")]
     public async Task<IActionResult> GetSubmissionResult(Guid id)
     {
         var query = new GetSubmissionResultQuery { SubmissionId = id };

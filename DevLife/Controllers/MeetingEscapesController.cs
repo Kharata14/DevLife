@@ -20,7 +20,7 @@ public class MeetingEscapesController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("generate")]
+    [HttpGet("meeting-generate")]
     public async Task<IActionResult> GenerateExcuse([FromQuery] MeetingType meetingType)
     {
         var query = new GenerateExcuseQuery { MeetingType = meetingType };
@@ -28,7 +28,7 @@ public class MeetingEscapesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("favorites")]
+    [HttpPost("meeting-favorites")]
     public async Task<IActionResult> SaveFavorite([FromBody] ExcuseDto excuse)
     {
         var command = new SaveFavoriteExcuseCommand { Excuse = excuse };
@@ -36,7 +36,7 @@ public class MeetingEscapesController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("favorites")]
+    [HttpGet("meeting-escape-favorites")]
     public async Task<IActionResult> GetFavorites()
     {
         var query = new GetFavoriteExcusesQuery();

@@ -19,7 +19,7 @@ public class CodeCasinoController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("daily-challenge")]
+    [HttpGet("casino-daily-challenge")]
     public async Task<IActionResult> GetDailyChallenge()
     {
         var query = new GetDailyChallengeQuery();
@@ -34,7 +34,7 @@ public class CodeCasinoController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("challenge")]
+    [HttpGet("casino-challenge")]
     public async Task<IActionResult> GetChallenge()
     {
         var query = new GetCasinoChallengeQuery();
@@ -42,7 +42,7 @@ public class CodeCasinoController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("bet")]
+    [HttpPost("casino-bet")]
     public async Task<IActionResult> PlaceBet([FromBody] PlaceBetCommand command)
     {
         try
@@ -55,7 +55,7 @@ public class CodeCasinoController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-    [HttpGet("leaderboard")]
+    [HttpGet("casino-leaderboard")]
     public async Task<IActionResult> GetLeaderboard()
     {
         var query = new GetCasinoLeaderboardQuery();

@@ -27,7 +27,7 @@ public class BugChaseController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("leaderboard")]
+    [HttpGet("bug-chase-eaderboard")]
     public async Task<IActionResult> GetLeaderboard()
     {
         var query = new GetLeaderboardQuery();
@@ -35,7 +35,7 @@ public class BugChaseController : ControllerBase
         return Ok(leaderboard);
     }
 
-    [HttpPost("score")]
+    [HttpPost("bug-chase-score")]
     public async Task<IActionResult> SubmitScore([FromBody] SubmitScoreCommand command)
     {
         await _mediator.Send(command);
